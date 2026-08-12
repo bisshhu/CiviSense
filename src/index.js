@@ -1,30 +1,17 @@
-import express from "express"
-import cors from "cors"
-import mongoose from "mongoose"
-const app= express()
+import connectDB from "./db/index.js";
+import app from "./app.js";
 
-app.use(cors())
-app.use(express.json())
-
-app.get("/",(req,res)=>{
-    res.json({message:"civisence is running "})
-})
-
-const PORT=process.env.PORT||5001
-
-
-const startServer = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log("MongoDB connected");
-
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+connectDB()
+  .then(() => {
+    app.on("error",(error)=>{
+        console.log("Error : ",error) 
+        throw error;
+    }) 
+    app.listen(process.env.PORT || 5001, () => {
+      console.log(`Server is running on port ${process.env.PORT || 5001}`);
     });
-  } catch (error) {
-    console.error("Database connection failed:", error.message);
+  })
+  .catch((error) => {
+    console.error("MongoDB connection failed:", error.message);
     process.exit(1);
-  }
-};
-
-startServer();
+  });
