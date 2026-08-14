@@ -27,7 +27,6 @@ const userSchema=new Schema({
         type:String,
         required:[true,"password is required"],
         minlength:8,
-        select: false,
         maxlength:72,
         validate: {
         validator: function (value) {
@@ -39,7 +38,6 @@ const userSchema=new Schema({
      },
      refreshToken:{
         type:String,
-        select: false,
      }
 },
 {

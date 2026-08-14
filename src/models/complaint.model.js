@@ -1,3 +1,4 @@
+
 import mongoose, { Schema } from "mongoose";
 
 const statusHistorySchema = new Schema(
@@ -13,11 +14,13 @@ const statusHistorySchema = new Schema(
       ],
       required: true,
     },
+
     note: {
       type: String,
       trim: true,
       maxlength: 500,
     },
+
     changedAt: {
       type: Date,
       default: Date.now,
@@ -26,13 +29,41 @@ const statusHistorySchema = new Schema(
   { _id: false }
 );
 
+const portalSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    url: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    type: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  { _id: false }
+);
+
 const complaintSchema = new Schema(
   {
+    
+    // USER
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
+
+    
+    // ORIGINAL COMPLAINT
 
     title: {
       type: String,
@@ -69,18 +100,71 @@ const complaintSchema = new Schema(
       trim: true,
     },
 
+    
+    // AI ANALYSIS
+    issueType: {
+      type: String,
+      enum: [
+        "road",
+        "pothole",
+        "garbage",
+        "water",
+        "electricity",
+        "drainage",
+        "streetlight",
+        "sewage",
+        "railway",
+        "public safety",
+        "other",
+      ],
+    },
+
+    urgency: {
+      type: String,
+      enum: ["low", "medium", "high"],
+      default: "medium",
+    },
+
+    // LOCATION
     location: {
       address: {
         type: String,
         required: true,
         trim: true,
       },
+
+      area: {
+        type: String,
+        trim: true,
+      },
+
+      city: {
+        type: String,
+        trim: true,
+      },
+
+      district: {
+        type: String,
+        trim: true,
+      },
+
+      state: {
+        type: String,
+        trim: true,
+      },
+
+      postcode: {
+        type: String,
+        trim: true,
+      },
+
       latitude: {
         type: Number,
         required: true,
         min: -90,
         max: 90,
       },
+
       longitude: {
         type: Number,
         required: true,
@@ -88,6 +172,31 @@ const complaintSchema = new Schema(
         max: 180,
       },
     },
+
+    
+    // AI GENERATED CONTENT
+
+    formalDescription: {
+      type: String,
+      trim: true,
+    },
+
+    complaintMessage: {
+      type: String,
+      trim: true,
+    },
+
+   
+    // GOVERNMENT PORTALS
+
+    portals: {
+      type: [portalSchema],
+      default: [],
+    },
+
+    // =========================
+    // COMPLAINT STATUS
+    // =========================
 
     status: {
       type: String,
@@ -111,11 +220,34 @@ const complaintSchema = new Schema(
       ],
     },
   },
+
   {
     timestamps: true,
   }
 );
 
-complaintSchema.index({ user: 1, createdAt: -1 });
 
-export const Complaint = mongoose.model("Complaint", complaintSchema);
+// INDEXES
+
+
+complaintSchema.index({
+  user: 1,
+  createdAt: -1,
+});
+
+complaintSchema.index({
+  "location.state": 1,
+  "location.city": 1,
+});
+
+complaintSchema.index({
+  status: 1,
+});
+
+// MODEL
+
+export const Complaint = mongoose.model(
+  "Complaint",
+  complaintSchema
+);
+
