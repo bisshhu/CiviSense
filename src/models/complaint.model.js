@@ -189,10 +189,12 @@ const complaintSchema = new Schema(
    
     // GOVERNMENT PORTALS
 
-    portals: {
-      type: [portalSchema],
-      default: [],
+    portals: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Portal",
     },
+],
 
     // =========================
     // COMPLAINT STATUS

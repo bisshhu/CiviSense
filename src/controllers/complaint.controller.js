@@ -1,80 +1,94 @@
 import { Complaint } from "../models/complaint.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import {ApiResponse} from"../utils/ApiResponse.js"
-import{ApiError} from "../utils/ApiError.js"
-import {uploadOnCloudinary} from "../utils/cloudinary.js"
+import { ApiResponse } from "../utils/ApiResponse.js"
+import { ApiError } from "../utils/ApiError.js"
+import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { reverseGeocode } from "../services/geocoding.services.js";
-
-const createComplaint=asyncHandler(async(req,res)=>{
-    const{
+import { analyzeComplaint } from "../services/ai.services.js";
+import { findGovernmentPortals } from "../services/portal.services.js";
+const createComplaint = asyncHandler(async (req, res) => {
+    const {
         title,
         description,
         category,
         latitude,
         longitude,
-    }=req.body;
-    if(
-        !title?.trim()||
-        !description?.trim()||
-        !category||
-        latitude===undefined||
-        longitude===undefined
-    ){
-        throw new ApiError(400,"Title, description, category and location are required")
+    } = req.body;
+    if (
+        !title?.trim() ||
+        !description?.trim() ||
+        !category ||
+        latitude === undefined ||
+        longitude === undefined
+    ) {
+        throw new ApiError(400, "Title, description, category and location are required")
     }
 
-    const imageLocalPath=req.files?.image?.[0]?.path
-    if(!imageLocalPath){
-        throw new ApiError(400,"Complaint image is required")
+    const imageLocalPath = req.files?.image?.[0]?.path
+    if (!imageLocalPath) {
+        throw new ApiError(400, "Complaint image is required")
     }
     const image = await uploadOnCloudinary(imageLocalPath)
-    if(!image){
-        throw new ApiError(500,"Failed to get the image link from cloudinary");
+    if (!image) {
+        throw new ApiError(500, "Failed to get the image link from cloudinary");
     }
 
-    const lat=Number(latitude)
-    const lon=Number(longitude)
-    if(
-        Number.isNaN(lat)||
+    const lat = Number(latitude)
+    const lon = Number(longitude)
+    if (
+        Number.isNaN(lat) ||
         Number.isNaN(lon)
-    ){
-        throw new ApiError(400,"Latitude and longitude must be valid numbers")
+    ) {
+        throw new ApiError(400, "Latitude and longitude must be valid numbers")
     }
-    if(
-        lat<-90||
-        lat>90||
-        lon>180||
-        lon<-180  
-    ){
-        throw new ApiError(400,"Invalid latitude and longitude")
+    if (
+        lat < -90 ||
+        lat > 90 ||
+        lon > 180 ||
+        lon < -180
+    ) {
+        throw new ApiError(400, "Invalid latitude and longitude")
     }
-    
+
     const location = await reverseGeocode(lat, lon);
-    
+
     if (!location) {
         throw new ApiError(
             502,
             "Unable to determine complaint location"
         );
     }
+    const aiResult = await analyzeComplaint(description);
+    const { issueType, urgency } = aiResult;
+
+    const portals = await findGovernmentPortals({
+        complaintText: description,
+        issueType,
+        state: location.state,
+        district: location.district,
+        city: location.city,
+    });
     const complaint = await Complaint.create({
-    user: req.user._id,
-    title: title.trim(),
-    description: description.trim(),
-    category,
-    image: image?.url,
-    location,
-    status: "submitted",
-    statusHistory: [
-        {
-            status: "submitted",
-            note: "Complaint submitted",
-        },
-    ],
-});
+        user: req.user._id,
+        title: title.trim(),
+        description: description.trim(),
+        category,
+        image: image?.url,
+        location,
+        issueType,
+        urgency,
+        portals: portals.map(portal => portal._id),
+        status: "submitted",
+        statusHistory: [
+            {
+                status: "submitted",
+                note: "Complaint submitted",
+            },
+        ],
+    });
     return res
-    .status(201)
-    .json(new ApiResponse(201,complaint,"Complaint created successfully "))
+        .status(201)
+        .json(new ApiResponse(201, complaint, "Complaint created successfully "))
 })
 
-export {createComplaint}
+export { createComplaint }
