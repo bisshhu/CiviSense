@@ -86,9 +86,57 @@ const createComplaint = asyncHandler(async (req, res) => {
             },
         ],
     });
+    await complaint.populate("portals");
     return res
         .status(201)
         .json(new ApiResponse(201, complaint, "Complaint created successfully "))
 })
+const getUserComplaints=asyncHandler(async(req,res)=>{
+    const complaints=await Complaint.find({
+        user:req.user._id,
+    })
+    .populate("portals")
+    .sort({createdAt:-1})
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(200,complaints,"complaints fetched successfully")
+    )
 
-export { createComplaint }
+})
+
+const getComplaintId=asyncHandler(async(req,res)=>{
+    const {complaintId}=req.params
+    const complaint=await Complaint.findOne({
+        _id:complaintId,
+        user:req.user._id
+    }).populate("portals")
+    if(!complaint){
+        throw new ApiError(404,"complaint not found")
+    }
+    return res
+    .status(200)
+    .json(new ApiResponse(
+        200,complaint,"complaint fetched successfully"
+    ))
+})
+const getComplaintPortals=asyncHandler(async(req,res)=>{
+    const {complaintId}=req.params
+    const complaint=await Complaint.findOne({
+        _id:complaintId,
+        user:req.user._id
+    }).populate("portals")
+    if(!complaint){
+        throw new ApiError(404,"complaint not found");
+    }
+    return res
+    .status(200)
+    .json(new ApiResponse(200,complaint.portals,"Complaint portals fetched successfully"))
+})
+export {
+    createComplaint,
+    getUserComplaints,
+    getComplaintId,
+    getComplaintPortals,
+    
+}

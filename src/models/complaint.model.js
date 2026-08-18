@@ -29,28 +29,6 @@ const statusHistorySchema = new Schema(
   { _id: false }
 );
 
-const portalSchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    url: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    type: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-  },
-  { _id: false }
-);
 
 const complaintSchema = new Schema(
   {

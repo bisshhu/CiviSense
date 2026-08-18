@@ -57,6 +57,10 @@ const portalSchema = new Schema(
         lastVerifiedAt: {
             type: Date,
         },
+        source: {
+        type: String,
+        trim: true,
+},
     },
     {
         timestamps: true,

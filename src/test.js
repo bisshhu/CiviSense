@@ -1,83 +1,14 @@
 import "dotenv/config";
+import Groq from "groq-sdk";
 
-import mongoose from "mongoose";
-import { findGovernmentPortals } from "./services/portal.services.js";
+const groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY,
+});
 
-const test = async () => {
-    try {
+const models = await groq.models.list();
 
-        // Connect MongoDB
-        await mongoose.connect(process.env.MONGODB_URI);
+console.log("\nAVAILABLE MODELS:\n");
 
-        console.log("MongoDB connected");
-
-        // Test complaint information
-        const issueType = "pothole";
-        const state = "Karnataka";
-        const district = "Belagavi";
-        const city = "Belagavi";
-
-        const complaintText =
-            "There are large potholes near MG Road causing danger to vehicles and pedestrians.";
-
-        // Find government portals
-        const portals = await findGovernmentPortals({
-            issueType,
-            state,
-            district,
-            city,
-            complaintText,
-        });
-
-        console.log("\nDISCOVERED PORTALS:\n");
-
-        if (portals.length === 0) {
-            console.log("No government portals found.");
-            return;
-        }
-
-        portals.forEach((portal, index) => {
-
-            console.log(
-                `${index + 1}. ${portal.name}`
-            );
-
-            console.log(
-                `Portal URL: ${portal.url}`
-            );
-
-            console.log(
-                `Source Page: ${portal.sourcePage}`
-            );
-
-            console.log(
-                `Verified: ${portal.verified}`
-            );
-
-            console.log(
-                `Issue Types: ${portal.issueTypes?.join(", ")}`
-            );
-
-            console.log(
-                `Description: ${portal.description}`
-            );
-
-            console.log("");
-        });
-
-    } catch (error) {
-
-        console.error(
-            "\nTEST FAILED:"
-        );
-
-        console.error(error);
-
-    } finally {
-
-        await mongoose.disconnect();
-
-    }
-};
-
-test();
+models.data.forEach(model => {
+    console.log(model.id);
+});
