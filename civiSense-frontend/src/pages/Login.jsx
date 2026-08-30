@@ -118,7 +118,12 @@ const Login = () => {
                         placeholder="••••••••"
                         required
                     />
-
+                    <Link
+                        to="/forgot-password"
+                        className="forgot-password-link"
+                    >
+                        Forgot password?
+                    </Link>
                     <button
                         type="submit"
                         disabled={loading}

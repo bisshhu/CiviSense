@@ -174,15 +174,15 @@ const verifyEmail = asyncHandler(async (req, res) => {
     password: pendingUser.password,
     createdAt: new Date(),
     updatedAt: new Date(),
-};
+  };
 
-const result = await User.collection.insertOne(userData);
+  const result = await User.collection.insertOne(userData);
 
-await PendingUser.deleteOne({
+  await PendingUser.deleteOne({
     _id: pendingUser._id
-});
+  });
 
-const createdUser = await User
+  const createdUser = await User
     .findById(result.insertedId)
     .select("-password -refreshToken");
   return res
@@ -301,12 +301,249 @@ const getCurrentUser = asyncHandler(async (req, res) => {
     );
 });
 
+const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  if (!email?.trim())
+    return new ApiError(400, "Email is required")
 
+  const normalisedEmail = email.trim().toLowerCase();
+  const user = await User.findOne({
+    email: normalisedEmail
+  })
+  if (!user) {
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          {},
+          "If an account exists with this email, a verification OTP has been sent"
+        )
+      )
+  }
+  const otp = crypto
+    .randomInt(100000, 999999)
+    .toString()
+
+  const hashOtp = await bcrypt.hash(otp, 10)
+
+  const otpExpiresAt = new Date(
+    Date.now() + 10 * 60 * 1000
+  )
+
+  user.resetOtpHash = hashOtp;
+  user.resetOtpExpiresAt = otpExpiresAt;
+  user.resetOtpAttempts = 0;
+  await user.save({
+    validateBeforeSave: false,
+  });
+  try {
+    await sendVerificationEmail(normalisedEmail, otp);
+  } catch (error) {
+    user.resetOtpHash = undefined;
+    user.resetOtpExpiresAt = undefined;
+    user.resetOtpAttempts = 0;
+    await user.save({
+      validateBeforeSave: false,
+    });
+    console.error(
+      "PASSWORD RESET EMAIL ERROR:",
+      error
+    );
+
+    throw new ApiError(
+      500,
+      "Unable to send password reset email"
+    );
+
+  }
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        {},
+        "If an account exists with this email, a verification OTP has been sent"
+      )
+    );
+})
+const verifyResetOtp = asyncHandler(async (req, res) => {
+  const { email, otp } = req.body
+  if (!email?.trim() || !otp?.trim()) {
+    throw new ApiError(
+      400,
+      "Email and OTP are required"
+    );
+  }
+  const normalisedEmail =
+    email.trim().toLowerCase();
+  console.log("EMAIL RECEIVED:", email);
+  console.log("NORMALISED EMAIL:", normalisedEmail);
+  const user = await User.findOne({
+    email: normalisedEmail
+  });
+  if (!user) {
+    throw new ApiError(
+      400,
+      "Invalid or expired OTP"
+    );
+  }
+  if (
+    !user.resetOtpHash ||
+    !user.resetOtpExpiresAt
+  ) {
+    throw new ApiError(
+      400,
+      "No password reset request found"
+    );
+  }
+  if (
+    user.resetOtpExpiresAt.getTime() <
+    Date.now()
+  ) {
+    user.resetOtpHash = undefined;
+    user.resetOtpExpiresAt = undefined;
+    user.resetOtpAttempts = 0;
+
+    await user.save({
+      validateBeforeSave: false
+    });
+
+    throw new ApiError(
+      400,
+      "OTP has expired. Please request a new one."
+    );
+  }
+  if (user.resetOtpAttempts >= 5) {
+    user.resetOtpHash = undefined;
+    user.resetOtpExpiresAt = undefined;
+    user.resetOtpAttempts = 0;
+
+    await user.save({
+      validateBeforeSave: false
+    });
+
+    throw new ApiError(
+      429,
+      "Too many incorrect attempts. Please request a new OTP."
+    );
+  }
+
+  const isOtpCorrect =
+    await bcrypt.compare(
+      otp,
+      user.resetOtpHash
+    );
+  if (!isOtpCorrect) {
+
+    user.resetOtpAttempts += 1;
+
+    await user.save({
+      validateBeforeSave: false
+    });
+
+    throw new ApiError(
+      400,
+      "Invalid OTP"
+    );
+  }
+  const resetToken = crypto
+    .randomBytes(32)
+    .toString("hex");
+
+  const resetTokenHash = await bcrypt.hash(
+    resetToken,
+    10
+  );
+
+  user.resetTokenHash = resetTokenHash;
+
+  user.resetTokenExpiresAt = new Date(
+    Date.now() + 10 * 60 * 1000
+  );
+
+  // OTP is no longer needed
+  user.resetOtpHash = undefined;
+  user.resetOtpExpiresAt = undefined;
+  user.resetOtpAttempts = 0;
+
+  await user.save({
+    validateBeforeSave: false
+  });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        {
+          resetToken
+        },
+        "OTP verified successfully"
+      )
+    );
+})
+const resetPassword=asyncHandler(async(req,res)=>{
+  const { resetToken, newPassword } = req.body;
+  if (!resetToken?.trim() || !newPassword?.trim()) {
+        throw new ApiError(
+            400,
+            "Reset token and new password are required"
+        );
+    }
+    if (newPassword.length < 8) {
+        throw new ApiError(
+            400,
+            "Password must be at least 8 characters"
+        );
+    }
+    const users = await User.find({
+        resetTokenHash: { $exists: true },
+        resetTokenExpiresAt: { $gt: new Date() }
+    });
+    let user = null;
+    for (const candidate of users) {
+        const isTokenCorrect = await bcrypt.compare(
+            resetToken,
+            candidate.resetTokenHash
+        );
+
+        if (isTokenCorrect) {
+            user = candidate;
+            break;
+        }
+    }
+    if (!user) {
+        throw new ApiError(
+            400,
+            "Invalid or expired reset token"
+        );
+    }
+    user.password = newPassword;
+    user.resetTokenHash = undefined;
+    user.resetTokenExpiresAt = undefined;
+    user.refreshToken = undefined;
+
+    await user.save();
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                {},
+                "Password reset successfully"
+            )
+        );
+})
 export {
   registerUser,
   loginUser,
   logoutUser,
   refreshAccessToken,
   getCurrentUser,
-  verifyEmail
+  verifyEmail,
+  forgotPassword,
+  verifyResetOtp,
+  resetPassword
 };

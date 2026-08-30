@@ -15,7 +15,9 @@ import Dashboard from "./pages/Dashboard.jsx";
 import CreateComplaint from "./pages/CreateComplaint.jsx";
 import ComplaintDetails from "./pages/ComplaintDetails.jsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
-
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import VerifyResetOtp from "./pages/VerifyResetOtp.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,7 +50,20 @@ const router = createBrowserRouter([
             path: "complaints/:complaintId",
             element: <ComplaintDetails />,
           },
+
         ],
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />
+      },
+      {
+        path: "verify-reset-otp",
+        element: <VerifyResetOtp />
+      },
+      {
+        path: "reset-password",
+        element: <ResetPassword />
       },
     ],
   },

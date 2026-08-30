@@ -5,7 +5,10 @@ import {
     logoutUser,
     refreshAccessToken,
     getCurrentUser,
-    verifyEmail
+    verifyEmail,
+    forgotPassword,
+    verifyResetOtp,
+    resetPassword
     } from "../controllers/auth.controller.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js"
 const router=Router()
@@ -19,4 +22,7 @@ router.route("/me").get(
     getCurrentUser
 );
 router.route("/verify-email").post(verifyEmail)
+router.route("/forgot-password").post(forgotPassword)
+router.route("/verify-reset-otp").post(verifyResetOtp);
+router.route("/reset-password").post(resetPassword);
 export default router
