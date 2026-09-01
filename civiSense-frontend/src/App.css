@@ -121,6 +121,151 @@
     box-shadow:
         0 8px 20px rgba(15, 23, 42, 0.18);
 }
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    width: 100%;
+    min-height: 70px;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1000;
+}
+
+.navbar-logo {
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 800;
+    color: #1e3a8a;
+    letter-spacing: -0.5px;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: #334155;
+    font-size: 15px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+    color: #2563eb;
+}
+
+.logout-button {
+    border: none;
+    background: transparent;
+    color: #dc2626;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.logout-button:hover {
+    color: #b91c1c;
+}
+
+
+/* =========================
+   HAMBURGER
+========================= */
+
+.navbar-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.navbar-toggle span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: #1e293b;
+    border-radius: 2px;
+    transition: 0.25s ease;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        min-height: 64px;
+        padding: 0 20px;
+    }
+
+    .navbar-logo {
+        font-size: 22px;
+    }
+
+    .navbar-toggle {
+        display: flex;
+    }
+
+    .navbar-links {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        width: 100%;
+
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 0;
+        padding: 10px 20px 20px;
+
+        background: white;
+        border-top: 1px solid #e2e8f0;
+        box-shadow: 0 12px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    .navbar-links.open {
+        display: flex;
+    }
+
+    .navbar-links a,
+    .logout-button {
+        width: 100%;
+        padding: 14px 10px;
+        text-align: left;
+        border-radius: 8px;
+    }
+
+    .navbar-links a:hover {
+        background: #f1f5f9;
+    }
+
+    .logout-button {
+        text-align: left;
+    }
+
+    .logout-button:hover {
+        background: #fef2f2;
+    }
+}
 /* =========================
    PREMIUM HERO
 ========================= */

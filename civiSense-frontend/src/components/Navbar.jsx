@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -5,6 +6,11 @@ import { useAuth } from "../context/AuthContext.jsx";
 const Navbar = () => {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const closeMenu = () => {
+        setMenuOpen(false);
+    };
 
     const handleLogout = async () => {
         try {
@@ -13,6 +19,7 @@ const Navbar = () => {
             console.error("LOGOUT ERROR:", error);
         } finally {
             logout();
+            closeMenu();
             navigate("/login");
         }
     };
@@ -20,23 +27,57 @@ const Navbar = () => {
     return (
         <nav className="navbar">
 
-            <Link to="/" className="navbar-logo">
+            <Link
+                to="/"
+                className="navbar-logo"
+                onClick={closeMenu}
+            >
                 CiviSense
             </Link>
 
-            <div className="navbar-links">
+            {/* HAMBURGER */}
 
-                <Link to="/">
+            <button
+                className={`navbar-toggle ${
+                    menuOpen ? "active" : ""
+                }`}
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle navigation menu"
+                aria-expanded={menuOpen}
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            {/* NAVIGATION */}
+
+            <div
+                className={`navbar-links ${
+                    menuOpen ? "open" : ""
+                }`}
+            >
+
+                <Link
+                    to="/"
+                    onClick={closeMenu}
+                >
                     Home
                 </Link>
 
                 {user ? (
                     <>
-                        <Link to="/dashboard">
+                        <Link
+                            to="/dashboard"
+                            onClick={closeMenu}
+                        >
                             Dashboard
                         </Link>
 
-                        <Link to="/complaints/create">
+                        <Link
+                            to="/complaints/create"
+                            onClick={closeMenu}
+                        >
                             Report Issue
                         </Link>
 
@@ -49,11 +90,17 @@ const Navbar = () => {
                     </>
                 ) : (
                     <>
-                        <Link to="/login">
+                        <Link
+                            to="/login"
+                            onClick={closeMenu}
+                        >
                             Login
                         </Link>
 
-                        <Link to="/register">
+                        <Link
+                            to="/register"
+                            onClick={closeMenu}
+                        >
                             Register
                         </Link>
                     </>
