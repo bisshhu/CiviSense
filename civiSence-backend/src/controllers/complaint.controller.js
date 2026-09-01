@@ -4,8 +4,11 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import { ApiError } from "../utils/ApiError.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { reverseGeocode } from "../services/geocoding.services.js";
-import { analyzeComplaint } from "../services/ai.services.js";
 import { findGovernmentPortals } from "../services/portal.services.js";
+import {
+    analyzeComplaint,
+    generateComplaintApplication,
+} from "../services/ai.services.js";
 const createComplaint = asyncHandler(async (req, res) => {
     const {
         title,
@@ -68,6 +71,16 @@ const createComplaint = asyncHandler(async (req, res) => {
         district: location.district,
         city: location.city,
     });
+    const application = await generateComplaintApplication({
+        title,
+        description,
+        category,
+        issueType,
+        urgency,
+        location,
+        portals,
+    });
+
     const complaint = await Complaint.create({
         user: req.user._id,
         title: title.trim(),
@@ -85,58 +98,61 @@ const createComplaint = asyncHandler(async (req, res) => {
                 note: "Complaint submitted",
             },
         ],
+        application,
     });
     await complaint.populate("portals");
     return res
         .status(201)
         .json(new ApiResponse(201, complaint, "Complaint created successfully "))
 })
-const getUserComplaints=asyncHandler(async(req,res)=>{
-    const complaints=await Complaint.find({
-        user:req.user._id,
+const getUserComplaints = asyncHandler(async (req, res) => {
+    const complaints = await Complaint.find({
+        user: req.user._id,
     })
-    .populate("portals")
-    .sort({createdAt:-1})
+        .populate("portals")
+        .sort({ createdAt: -1 })
     return res
-    .status(200)
-    .json(
-        new ApiResponse(200,complaints,"complaints fetched successfully")
-    )
+        .status(200)
+        .json(
+            new ApiResponse(200, complaints, "complaints fetched successfully")
+        )
 
 })
 
-const getComplaintId=asyncHandler(async(req,res)=>{
-    const {complaintId}=req.params
-    const complaint=await Complaint.findOne({
-        _id:complaintId,
-        user:req.user._id
+const getComplaintId = asyncHandler(async (req, res) => {
+    const { complaintId } = req.params
+    const complaint = await Complaint.findOne({
+        _id: complaintId,
+        user: req.user._id
     }).populate("portals")
-    if(!complaint){
-        throw new ApiError(404,"complaint not found")
+    if (!complaint) {
+        throw new ApiError(404, "complaint not found")
     }
     return res
-    .status(200)
-    .json(new ApiResponse(
-        200,complaint,"complaint fetched successfully"
-    ))
+        .status(200)
+        .json(new ApiResponse(
+            200, complaint, "complaint fetched successfully"
+        ))
 })
-const getComplaintPortals=asyncHandler(async(req,res)=>{
-    const {complaintId}=req.params
-    const complaint=await Complaint.findOne({
-        _id:complaintId,
-        user:req.user._id
+const getComplaintPortals = asyncHandler(async (req, res) => {
+    const { complaintId } = req.params
+    const complaint = await Complaint.findOne({
+        _id: complaintId,
+        user: req.user._id
     }).populate("portals")
-    if(!complaint){
-        throw new ApiError(404,"complaint not found");
+    if (!complaint) {
+        throw new ApiError(404, "complaint not found");
     }
     return res
-    .status(200)
-    .json(new ApiResponse(200,complaint.portals,"Complaint portals fetched successfully"))
+        .status(200)
+        .json(new ApiResponse(200, complaint.portals, "Complaint portals fetched successfully"))
 })
+
+
 export {
     createComplaint,
     getUserComplaints,
     getComplaintId,
     getComplaintPortals,
-    
+
 }

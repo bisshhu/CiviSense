@@ -39,7 +39,9 @@ const complaintSchema = new Schema(
       ref: "User",
       required: true,
     },
-
+    application: {
+    type: String
+},
     
     // ORIGINAL COMPLAINT
 
