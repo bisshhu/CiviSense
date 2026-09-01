@@ -3546,3 +3546,1117 @@
         line-height: 1.7;
     }
 }
+
+/* =========================================================
+   CIVISENSE — GLOBAL RESPONSIVE POLISH
+   Added without removing the existing design.
+   These rules intentionally come last so they safely override
+   earlier duplicate/legacy responsive rules.
+========================================================= */
+
+/* ---------- GLOBAL SAFETY ---------- */
+
+html {
+    width: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#root {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+video,
+svg {
+    max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+    max-width: 100%;
+}
+
+a {
+    overflow-wrap: anywhere;
+}
+
+/* ---------- CONSISTENT PAGE WIDTH ---------- */
+
+.home-page,
+.dashboard,
+.details-page,
+.create-complaint-page,
+.auth-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Keep main content visually centered on large screens */
+.dashboard,
+.details-page,
+.create-complaint-page {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ---------- NAVBAR POLISH ---------- */
+
+.navbar {
+    width: 100%;
+    max-width: 100%;
+    padding-left: clamp(20px, 5vw, 7%);
+    padding-right: clamp(20px, 5vw, 7%);
+}
+
+.navbar-logo {
+    flex-shrink: 0;
+}
+
+.navbar-links {
+    min-width: 0;
+}
+
+.navbar-toggle {
+    flex-shrink: 0;
+}
+
+/* ---------- HOMEPAGE ---------- */
+
+.hero-section,
+.how-section,
+.how-it-works,
+.home-cta {
+    width: 100%;
+    max-width: 100%;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 850px;
+}
+
+.hero-section h1,
+.hero-description {
+    overflow-wrap: anywhere;
+}
+
+.steps {
+    width: 100%;
+}
+
+.step {
+    min-width: 0;
+}
+
+.step p {
+    max-width: 100%;
+}
+
+.hero-actions a,
+.home-cta .primary-button {
+    min-width: 0;
+}
+
+/* ---------- DASHBOARD ---------- */
+
+.dashboard {
+    padding-left: clamp(20px, 5vw, 8%);
+    padding-right: clamp(20px, 5vw, 8%);
+}
+
+.dashboard-header > div {
+    min-width: 0;
+}
+
+.dashboard-header h1,
+.section-title h2,
+.complaint-card-header h2 {
+    overflow-wrap: anywhere;
+}
+
+.dashboard-stats {
+    width: 100%;
+}
+
+.stat-card {
+    min-width: 0;
+}
+
+.complaints-section {
+    width: 100%;
+    max-width: 1100px;
+}
+
+.complaint-card {
+    width: 100%;
+    min-width: 0;
+}
+
+.complaint-card-header > div {
+    min-width: 0;
+}
+
+.complaint-description {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.complaint-meta > div {
+    min-width: 0;
+}
+
+.complaint-meta strong,
+.complaint-meta span {
+    overflow-wrap: anywhere;
+}
+
+/* ---------- AUTH ---------- */
+
+.auth-page {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.auth-card {
+    min-width: 0;
+}
+
+.auth-card input,
+.auth-card button {
+    min-width: 0;
+}
+
+/* ---------- COMPLAINT DETAILS ---------- */
+
+.details-page {
+    padding-left: clamp(14px, 5vw, 5%);
+    padding-right: clamp(14px, 5vw, 5%);
+}
+
+.details-card {
+    width: 100%;
+    min-width: 0;
+}
+
+.details-header > div {
+    min-width: 0;
+}
+
+.details-section,
+.analysis-grid,
+.portal-list {
+    width: 100%;
+    min-width: 0;
+}
+
+.analysis-item,
+.portal-card {
+    min-width: 0;
+}
+
+.details-section > p,
+.portal-card > p,
+.application-subtitle {
+    overflow-wrap: anywhere;
+}
+
+.complaint-image-container {
+    width: 100%;
+}
+
+.complaint-image {
+    width: 100%;
+    max-width: 100%;
+}
+
+.location-details {
+    width: 100%;
+}
+
+.location-details span {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.history-item > div {
+    min-width: 0;
+}
+
+.history-item p {
+    overflow-wrap: anywhere;
+}
+
+.portal-info {
+    min-width: 0;
+}
+
+.portal-info span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* ---------- CREATE COMPLAINT ---------- */
+
+.create-complaint-page {
+    padding-left: clamp(14px, 5vw, 5%);
+    padding-right: clamp(14px, 5vw, 5%);
+}
+
+.complaint-form-card {
+    width: 100%;
+    min-width: 0;
+}
+
+.form-heading,
+.complaint-form-card form {
+    width: 100%;
+    min-width: 0;
+}
+
+.complaint-form-card input,
+.complaint-form-card textarea,
+.complaint-form-card select,
+.complaint-form-card input[type="file"] {
+    min-width: 0;
+}
+
+.image-preview-container {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.image-preview {
+    max-width: 100%;
+}
+
+.location-section {
+    min-width: 0;
+}
+
+.location-success {
+    overflow-wrap: anywhere;
+}
+
+/* ---------- GENERATED APPLICATION ---------- */
+
+.application-section {
+    width: 100%;
+    min-width: 0;
+}
+
+.application-header > div {
+    min-width: 0;
+}
+
+.application-box {
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.application-box pre {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* =========================================================
+   LARGE LAPTOPS / SMALL DESKTOPS
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .navbar {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .hero-section,
+    .how-section,
+    .how-it-works,
+    .home-cta {
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+
+    .dashboard {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .details-page,
+    .create-complaint-page {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    .details-card {
+        max-width: 1150px;
+    }
+}
+
+/* =========================================================
+   TABLETS
+========================================================= */
+
+@media (max-width: 900px) {
+
+    /* Navbar */
+    .navbar {
+        min-height: 68px;
+        padding: 0 24px;
+    }
+
+    /* Homepage */
+    .hero-section {
+        min-height: 570px;
+        padding: 75px 6%;
+    }
+
+    .hero-section h1 {
+        max-width: 760px;
+        font-size: clamp(46px, 8vw, 70px);
+        letter-spacing: -3px;
+    }
+
+    .hero-description {
+        max-width: 620px;
+    }
+
+    .how-section,
+    .how-it-works {
+        padding: 85px 6%;
+    }
+
+    .steps {
+        grid-template-columns: 1fr;
+    }
+
+    .step,
+    .steps > div {
+        min-height: auto;
+    }
+
+    .home-cta {
+        padding: 90px 6%;
+    }
+
+    /* Dashboard */
+    .dashboard {
+        padding: 48px 5% 75px;
+    }
+
+    .dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    .dashboard-button {
+        width: fit-content;
+        max-width: 100%;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .stat-card {
+        padding: 21px;
+    }
+
+    .stat-card strong {
+        font-size: 34px;
+    }
+
+    /* Details */
+    .details-page {
+        padding: 32px 28px 60px;
+    }
+
+    .details-card {
+        padding: 32px;
+    }
+
+    .complaint-image {
+        height: 360px;
+    }
+
+    .analysis-grid {
+        gap: 14px;
+    }
+
+    .portal-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Create complaint */
+    .create-complaint-page {
+        padding: 34px 24px 60px;
+    }
+
+    .complaint-form-card {
+        padding: 35px;
+    }
+
+    /* Auth */
+    .auth-page {
+        padding-top: 55px;
+        padding-bottom: 55px;
+    }
+}
+
+/* =========================================================
+   MOBILE — 650px
+========================================================= */
+
+@media (max-width: 650px) {
+
+    /* ---------- NAVBAR ---------- */
+
+    .navbar {
+        min-height: 64px;
+        padding: 0 16px;
+    }
+
+    .navbar-logo {
+        font-size: 21px;
+        letter-spacing: -0.5px;
+    }
+
+    .navbar-logo::before {
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+        font-size: 15px;
+    }
+
+    .navbar-toggle {
+        display: flex;
+        width: 40px;
+        height: 40px;
+        padding: 7px;
+    }
+
+    .navbar-links {
+        top: 64px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+        padding: 10px 14px 18px;
+    }
+
+    .navbar-links a,
+    .logout-button {
+        min-height: 46px;
+        padding: 12px 11px;
+        font-size: 14px;
+    }
+
+    /* ---------- HOMEPAGE ---------- */
+
+    .hero-section {
+        min-height: auto;
+        padding: 62px 20px 72px;
+    }
+
+    .hero-section::before {
+        width: 260px;
+        height: 260px;
+        right: -145px;
+        top: 35px;
+    }
+
+    .hero-section::after {
+        width: 120px;
+        height: 120px;
+        right: -35px;
+        bottom: -60px;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-section .eyebrow,
+    .home-cta .eyebrow,
+    .section-heading .eyebrow {
+        max-width: 100%;
+        font-size: 9px;
+        letter-spacing: 1.35px;
+        padding: 6px 10px;
+    }
+
+    .hero-section h1 {
+        max-width: 100%;
+        margin-bottom: 22px;
+        font-size: clamp(40px, 12vw, 52px);
+        line-height: 1.02;
+        letter-spacing: -2.5px;
+    }
+
+    .hero-description {
+        max-width: 100%;
+        margin-bottom: 28px;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .hero-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-actions a {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    .how-section,
+    .how-it-works {
+        padding: 68px 20px;
+    }
+
+    .section-heading {
+        max-width: 100%;
+        margin-bottom: 38px;
+    }
+
+    .section-heading h2,
+    .how-it-works h2 {
+        max-width: 100%;
+        font-size: clamp(32px, 9vw, 40px);
+        letter-spacing: -1.8px;
+    }
+
+    .section-heading > p:last-child {
+        font-size: 14px;
+    }
+
+    .steps {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .step,
+    .steps > div {
+        width: 100%;
+        padding: 24px;
+        border-radius: 17px;
+    }
+
+    .step h3,
+    .steps h3 {
+        font-size: 20px;
+    }
+
+    .step p,
+    .steps p {
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .home-cta {
+        padding: 68px 20px;
+    }
+
+    .home-cta h2 {
+        max-width: 100%;
+        font-size: clamp(34px, 9vw, 44px);
+        letter-spacing: -1.8px;
+    }
+
+    .home-cta p:not(.eyebrow) {
+        font-size: 14px;
+    }
+
+    .home-cta .primary-button {
+        width: 100%;
+        max-width: 360px;
+    }
+
+    /* ---------- DASHBOARD ---------- */
+
+    .dashboard {
+        padding: 34px 16px 60px;
+    }
+
+    .dashboard-header {
+        gap: 18px;
+        margin-bottom: 32px;
+    }
+
+    .dashboard-header h1 {
+        font-size: clamp(34px, 10vw, 42px);
+        letter-spacing: -1.8px;
+    }
+
+    .dashboard-header p:not(.eyebrow) {
+        font-size: 14px;
+    }
+
+    .dashboard-button {
+        width: 100%;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+        gap: 11px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        min-height: 105px;
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .stat-card strong {
+        font-size: 32px;
+    }
+
+    .complaints-section {
+        max-width: 100%;
+    }
+
+    .section-title {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+        font-size: 24px;
+    }
+
+    .complaints-list {
+        gap: 12px;
+    }
+
+    .complaint-card {
+        padding: 19px;
+        border-radius: 15px;
+    }
+
+    .complaint-card-header {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .complaint-card-header h2 {
+        font-size: 19px;
+    }
+
+    .complaint-description {
+        margin-bottom: 17px;
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+    .complaint-meta {
+        grid-template-columns: 1fr;
+        gap: 11px;
+        padding: 16px 0;
+    }
+
+    .complaint-footer {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 11px;
+    }
+
+    .view-complaint {
+        width: 100%;
+        justify-content: space-between;
+        padding: 10px 0 2px;
+    }
+
+    .empty-state {
+        margin: 40px auto;
+        padding: 38px 20px;
+    }
+
+    /* ---------- AUTH ---------- */
+
+    .auth-page {
+        min-height: calc(100vh - 64px);
+        padding: 35px 16px 45px;
+    }
+
+    .auth-card {
+        max-width: 100%;
+        padding: 28px 20px;
+        border-radius: 18px;
+    }
+
+    .auth-card h1 {
+        font-size: 30px;
+    }
+
+    .auth-card input {
+        font-size: 16px;
+    }
+
+    /* ---------- DETAILS ---------- */
+
+    .details-page {
+        padding: 20px 12px 42px;
+    }
+
+    .back-link {
+        margin-left: 2px;
+        margin-bottom: 17px;
+        font-size: 13px;
+    }
+
+    .details-card {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .details-header {
+        flex-direction: column;
+        gap: 13px;
+        padding-bottom: 22px;
+    }
+
+    .details-header h1 {
+        font-size: clamp(28px, 9vw, 34px);
+        letter-spacing: -1px;
+    }
+
+    .details-header .status {
+        align-self: flex-start;
+    }
+
+    .complaint-image-container {
+        margin: 22px 0;
+        border-radius: 11px;
+    }
+
+    .complaint-image {
+        height: 230px;
+    }
+
+    .details-section {
+        padding: 23px 0;
+    }
+
+    .details-section h2 {
+        margin-bottom: 13px;
+        font-size: 20px;
+    }
+
+    .details-section > p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .analysis-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .analysis-item {
+        min-height: 90px;
+        padding: 17px;
+        border-radius: 14px;
+    }
+
+    .location-details {
+        gap: 7px;
+    }
+
+    .location-details span {
+        font-size: 10px;
+        padding: 7px 9px;
+    }
+
+    .map-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .status-history {
+        padding-left: 28px;
+    }
+
+    .status-history::before {
+        left: 6px;
+    }
+
+    .history-item {
+        gap: 8px;
+        padding-bottom: 23px;
+    }
+
+    .history-item::before {
+        left: -27px;
+    }
+
+    .history-item > span {
+        font-size: 9px;
+        white-space: nowrap;
+    }
+
+    .portal-list {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .portal-card {
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .portal-card h3 {
+        font-size: 17px;
+    }
+
+    .portal-info {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .portal-link {
+        width: 100%;
+    }
+
+    /* ---------- CREATE COMPLAINT ---------- */
+
+    .create-complaint-page {
+        padding: 22px 12px 45px;
+    }
+
+    .complaint-form-card {
+        padding: 21px 17px;
+        border-radius: 16px;
+    }
+
+    .form-heading {
+        margin-bottom: 24px;
+    }
+
+    .form-heading h1 {
+        font-size: clamp(29px, 9vw, 34px);
+        letter-spacing: -1px;
+    }
+
+    .form-heading > p:last-child {
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+    .complaint-form-card label {
+        font-size: 12px;
+    }
+
+    .complaint-form-card input[type="text"],
+    .complaint-form-card select {
+        height: 46px;
+    }
+
+    .complaint-form-card textarea {
+        min-height: 120px;
+    }
+
+    .complaint-form-card input,
+    .complaint-form-card textarea,
+    .complaint-form-card select {
+        font-size: 16px;
+    }
+
+    .complaint-form-card input[type="file"] {
+        padding: 11px;
+        font-size: 12px;
+    }
+
+    .complaint-form-card input[type="file"]::file-selector-button {
+        margin-right: 8px;
+        padding: 7px 10px;
+    }
+
+    .image-preview {
+        height: 205px;
+    }
+
+    .location-section {
+        padding: 15px;
+    }
+
+    .location-button,
+    .submit-complaint {
+        min-height: 48px;
+    }
+
+    /* ---------- APPLICATION ---------- */
+
+    .application-header {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 17px;
+    }
+
+    .application-subtitle {
+        font-size: 13px;
+    }
+
+    .copy-application-btn {
+        width: 100%;
+        min-height: 46px;
+    }
+
+    .application-box {
+        padding: 17px;
+        border-radius: 12px;
+    }
+
+    .application-box pre {
+        font-size: 13px;
+        line-height: 1.65;
+    }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .navbar {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+
+    .navbar-logo {
+        font-size: 19px;
+    }
+
+    .navbar-logo::before {
+        width: 30px;
+        height: 30px;
+    }
+
+    .hero-section {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .hero-section h1 {
+        font-size: 38px;
+        letter-spacing: -2px;
+    }
+
+    .how-section,
+    .how-it-works,
+    .home-cta {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .dashboard {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .complaint-card {
+        padding: 16px;
+    }
+
+    .details-page,
+    .create-complaint-page {
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+
+    .details-card,
+    .complaint-form-card {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .auth-page {
+        padding-left: 11px;
+        padding-right: 11px;
+    }
+
+    .auth-card {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+   Remove desktop hover movement on touch screens so cards
+   don't feel jumpy after tapping.
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+
+    .complaint-card:hover,
+    .stat-card:hover,
+    .step:hover,
+    .steps > div:hover,
+    .portal-card:hover,
+    .analysis-item:hover {
+        transform: none;
+    }
+
+    .complaint-image-container:hover .complaint-image {
+        transform: none;
+    }
+
+    .dashboard-button:hover,
+    .hero-actions a:hover,
+    .home-cta .primary-button:hover,
+    .portal-link:hover,
+    .map-link:hover {
+        transform: none;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
