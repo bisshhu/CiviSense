@@ -8,7 +8,25 @@ const ComplaintDetails = () => {
     const [complaint, setComplaint] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [copied, setCopied] = useState(false);
 
+    const handleCopyApplication = async () => {
+        if (!complaint?.application) return;
+
+        try {
+            await navigator.clipboard.writeText(
+                complaint.application
+            );
+
+            setCopied(true);
+
+            setTimeout(() => {
+                setCopied(false);
+            }, 2000);
+        } catch (error) {
+            console.error("COPY APPLICATION ERROR:", error);
+        }
+    };
     useEffect(() => {
         const fetchComplaint = async () => {
             try {
@@ -124,7 +142,47 @@ const ComplaintDetails = () => {
                     </p>
 
                 </section>
+                {/* COMPLAINT APPLICATION */}
 
+                <section className="details-section application-section">
+
+                    <div className="application-header">
+
+                        <div>
+                            <p className="eyebrow">
+                                READY TO SUBMIT
+                            </p>
+
+                            <h2>Complaint Application</h2>
+
+                            <p className="application-subtitle">
+                                Copy this application and paste it into
+                                the appropriate government complaint portal.
+                            </p>
+                        </div>
+
+                        <button
+                            className={`copy-application-btn ${copied ? "copied" : ""
+                                }`}
+                            onClick={handleCopyApplication}
+                        >
+                            {copied
+                                ? "✓ Copied"
+                                : "📋 Copy Application"}
+                        </button>
+
+                    </div>
+
+                    <div className="application-box">
+
+                        <pre>
+                            {complaint.application ||
+                                "Complaint application is not available."}
+                        </pre>
+
+                    </div>
+
+                </section>
                 {/* AI ANALYSIS */}
 
                 <section className="details-section">

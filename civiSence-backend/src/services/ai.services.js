@@ -140,8 +140,9 @@ const generateComplaintApplication = async ({
             .join("\n")
         : "No specific government portal identified.";
 
-    const prompt = `
-Generate a formal civic complaint application based on the following complaint.
+const prompt = `
+Generate a formal civic complaint application that the user can
+copy and paste directly into an online government grievance portal.
 
 COMPLAINT DETAILS:
 Title: ${title}
@@ -162,20 +163,25 @@ RELEVANT GOVERNMENT AUTHORITIES/PORTALS:
 ${portalInformation}
 
 REQUIREMENTS:
-- Write a professional and polite complaint application suitable for submission to an Indian government authority.
+- Write a clear, professional and polite online grievance application.
+- Make it suitable for submission through an Indian government grievance portal.
 - Clearly explain the civic problem.
-- Include the exact location available above.
-- Explain the impact/problem caused by the issue.
-- Request appropriate action from the concerned authority.
-- Do not invent facts that are not present in the complaint.
-- Do not invent dates, names, phone numbers, addresses, complaint numbers, or other personal information.
-- Do not include a fictional sender name.
-- Do not include a fictional government officer's name.
+- Include the available location details.
+- Explain the impact of the issue.
+- Clearly request appropriate action from the concerned authority.
+- Do not invent facts.
+- Do not invent dates, names, phone numbers or other personal information.
+- Do not include a signature.
+- Do not include "Yours faithfully", "Yours sincerely", or similar letter closings.
+- Do not include a sender name.
+- Do not include placeholders such as [Name], [Address], [Signature], etc.
+- Do not use Markdown.
+- Do not use asterisks (*).
+- Do not use bullet points.
+- Use plain text with normal paragraphs.
+- Include a clear Subject line.
 - Keep the application concise but complete.
-- Use a formal application format.
-- Include a clear subject.
-- Return only the complaint application.
-- Do not include explanations before or after the application.
+- Return only the application.
 `;
 
     try {

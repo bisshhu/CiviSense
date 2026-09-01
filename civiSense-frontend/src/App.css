@@ -3318,4 +3318,86 @@
     }
 }
 
+.application-section {
+    margin-top: 10px;
+}
 
+.application-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 22px;
+}
+
+.application-header h2 {
+    margin-bottom: 8px;
+}
+
+.application-subtitle {
+    margin: 0;
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 700px;
+}
+
+.copy-application-btn {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s ease;
+}
+
+.copy-application-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.copy-application-btn.copied {
+    background: #16a34a;
+}
+
+.application-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 28px;
+    overflow-x: auto;
+}
+
+.application-box pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #334155;
+}
+@media (max-width: 700px) {
+
+    .application-header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .copy-application-btn {
+        width: 100%;
+    }
+
+    .application-box {
+        padding: 20px;
+    }
+
+    .application-box pre {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+}
