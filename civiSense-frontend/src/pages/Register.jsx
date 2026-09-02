@@ -328,7 +328,7 @@ const Register = () => {
 
                         <button
                             type="button"
-                            className="secondary-auth-button"
+                            className="secondary-auth-button "
                             onClick={
                                 goBackToRegistration
                             }

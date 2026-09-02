@@ -4660,3 +4660,7 @@ a {
         animation-iteration-count: 1 !important;
     }
 }
+
+.secondary-auth-button {
+    margin-top: 12px;
+}
