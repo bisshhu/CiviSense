@@ -57,7 +57,17 @@ const sendVerificationEmail = async (email, otp) => {
         console.log("EMAIL SENT:", info.messageId);
 
     } catch (error) {
-        console.error("EMAIL ERROR:", error);
+       
+    console.error("========== EMAIL ERROR ==========");
+    console.error("NAME:", error.name);
+    console.error("CODE:", error.code);
+    console.error("COMMAND:", error.command);
+    console.error("RESPONSE:", error.response);
+    console.error("RESPONSE CODE:", error.responseCode);
+    console.error("MESSAGE:", error.message);
+    console.error("STACK:", error.stack);
+    console.error("================================");
+
         throw error;
     }
 };
