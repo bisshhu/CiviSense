@@ -9,7 +9,13 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_APP_PASSWORD,
     },
 });
-
+transporter.verify((error, success) => {
+    if (error) {
+        console.error("SMTP VERIFY ERROR:", error);
+    } else {
+        console.log("SMTP SERVER IS READY:", success);
+    }
+});
 const sendVerificationEmail = async (email, otp) => {
     try {
         console.log("EMAIL SERVICE CALLED");
